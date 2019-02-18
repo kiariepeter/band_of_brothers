@@ -6,16 +6,16 @@ import getpass
 
 
 users = [
-    {"user_id": 1, "name": "admin", "password": "adminpassword", "type": "admin"},
-    {"user_id": 2, "name": "chronixx", "password": "chronology", "type": "moderator"},
-    {"user_id": 3, "name": "kdot", "password": "topdawg", "type": "user"}
+    {"user_id": 1, "name": "admin", "password": "123", "type": "admin"},
+    {"user_id": 2, "name": "chronixx", "password": "123", "type": "moderator"},
+    {"user_id": 3, "name": "kdot", "password": "123", "type": "user"}
 ]
 moderators = []
 admin = []
 comments = []
 
 
-class user:
+class User:
     """ Holds methods for normal users
     """
     def __init__(self, user_id, name, is_admin=3):
@@ -98,7 +98,7 @@ class user:
         pass
 
 
-class moderator(user):
+class moderator(User):
     """ Holds methods for moderator users
 
         Moderators can perform all operations of a normal user.
@@ -111,9 +111,11 @@ class moderator(user):
 
     def can_edit(self, comment):
         """ Checks user's edit privileges over the comment (True/False) """
-        if self.comment.author_id == self.user_id:
+        if comment.author.user_id == self.user_id:
             self.edit_comment = True
             return self.edit_comment
+
+
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
         if self.is_admin == 2:
@@ -161,7 +163,7 @@ class Comment:
         self._message = _message
         self._replied_to = _replied_to
 
-    @author.getter
+    @property
     def author(self):
         """ Returns author of comment """
         return self._author
@@ -171,7 +173,7 @@ class Comment:
         """ Sets the comment's author's name """
         self._author = value
 
-    @message.getter
+    @property
     def message(self):
         """ Returns the comment's message body """
         return self._message
@@ -185,7 +187,7 @@ class Comment:
         """ Returns the comment's creation timestamp """
         return datetime.datetime.now()
 
-    @replied_to.getter
+    @property
     def replied_to(self):
         """ Returns the Parent comment being replied to """
         return self._replied_to
@@ -197,10 +199,14 @@ class Comment:
 
     def __repr__(self):
         if self.replied_to:
-            return "author : " + self.author + ", message " + self.message + ", replied to " + self.replied_to
+            return "author : " + self._author.name + ", message " + self._message + ", replied to " + self._replied_to.name
         else:
-            return "author : " + self.author + ", message " + self.message
+            return "author : " + self._author.name + ", message " + self._message
 
+
+def display_comments():
+    for c in comments:
+        print(c)
 
 if __name__ == "__main__":
     loop = True # Controls program temination
@@ -224,19 +230,40 @@ if __name__ == "__main__":
             print('\t 3 - Reply to a comment')
             print('\t 0 - exit')
             print('=' * 80)
-            menu_selection = input('Enter a selection [0-6]: ')
+            menu_selection = input('Enter a selection [0-3]: ')
+            menu_selection = int(menu_selection)
+            count = len(users) + 1
 
 
             if menu_selection == 1:
-                pass
+                user = User(count, username)
+                msg = input("enter comment:\n>")
+                comment = Comment(user, msg)
+                comments.append(comment)
+                display_comments()
 
             elif menu_selection == 2:
-                pass
+                user = User(count, username)
+                name = input("enter name of the author who commented:\n>")
+                msg = input("enter comment:\n>")
+                comment = Comment(user, msg)
+                for i in range(len(comments)):
+                    if comments[i]._author.name == name:
+                        del comments[i]
+                comments.append(comment)
+                display_comments()
 
             elif menu_selection == 3:
-                pass
+                user = User(count, username)
+                msg = input("enter comment:\n>")
+                user_2 = input("enter the name of user to reply to:\n>")
+                user_2 = User(count, username)
+                comment = Comment(user, msg, user_2)
+                comments.append(comment)
+                display_comments()
 
             elif menu_selection == '0': # Exit
+                display_comments()
                 print(f"{' Good-Bye ':*^80}")
                 loop = False # Terminate program
 
