@@ -1,10 +1,18 @@
+#!/usr/bin/env python3
 """ A mock comments board section. """
 
 import datetime
+import getpass
 
-comments = []
-users = []
+
+users = [
+    {"user_id": 1, "name": "admin", "password": "adminpassword", "type": "admin"},
+    {"user_id": 2, "name": "chronixx", "password": "chronology", "type": "moderator"},
+    {"user_id": 3, "name": "kdot", "password": "topdawg", "type": "user"}
+]
 moderators = []
+admin = []
+comments = []
 
 
 class user:
@@ -134,5 +142,55 @@ class comment:
 
 
 if __name__ == "__main__":
-    pass
+
+    loop = True # Controls program temination
+    while loop == True:
+        print("*" * 80)
+        print(f"{'Welcome to the Band of brothers Comments boards':^80}")
+        print("*" * 80)
+        print(" \n Please Enter Login details ")
+
+        username = input("Enter user Name (blank space to exit):  ")
+        if username.strip() == "":
+            loop = False
+
+        password = getpass.getpass("Password: ")
+
+        if username in [_["name"] for _ in users] and \
+                password in [_["password"] for _ in users]:
+            print("What wold you like to do?")
+            print('\t 1 - Write a Comment')
+            print('\t 2 - Edit a comment')
+            print('\t 3 - Reply to a comment')
+            print('\t 4 - exit')
+            print('=' * 80)
+            menu_selection = input('Enter a selection [0-6]: ')
+
+
+            if menu_selection == 1:
+                pass
+
+            elif menu_selection == 2:
+                pass
+
+            elif menu_selection == 3:
+                pass
+
+            elif menu_selection == 4:
+                pass
+
+            elif menu_selection == '0': # Exit
+                print(f"{' Good-Bye ':*^80}")
+                loop = False # Terminate program
+
+            else:
+                print(f"{'UNRECOGNIZED COMMAND':*^80'}")
+                print(f'{menu_selection} is NOT a valid menu selection.')
+                print(f"{' Try Again ':-^80}")
+
+        else:
+            print("Invalid login details Please try again.")
+            continue
+
+
 
