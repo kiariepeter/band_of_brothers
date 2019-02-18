@@ -75,15 +75,25 @@ class admin(moderator):
         Admins can edit and or delete any comment
     """
     def __init__(self, name):
-        pass
+        #here we initialize the isAdmin to true 
+        self.is_admin = 1
+        self.name = name
 
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
-        pass
+        #here we check if user is admin
+        if self.is_admin == 1:
+            return True
+        return False
 
-    def can_edit(self, comment):
-        """ Checks user's edit privileges over the comment (True/False) """
-        pass
+
+    def can_edit(self,comment):
+        """ Checks user's edit privileges over the comment (True/False)  """
+        if self.is_admin == 1:
+            return True
+        return False
+
+
 
 
 class comment:
