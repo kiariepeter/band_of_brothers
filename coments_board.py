@@ -74,13 +74,13 @@ class user:
 
     def can_edit(self, comment):
         """ Checks user's edit privileges over the comment (True/False) """
-        if comment.author.name == self._name:
+        if comment.author.user_id == self._user_id:
             self._can_edit = True
             return self._can_edit
 
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
-        if comment.author.name == self._name:
+        if comment.author.user_id == self._user_id:
             self._can_delete = True
             return self._can_delete
 
