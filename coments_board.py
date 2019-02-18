@@ -58,16 +58,19 @@ class moderator(user):
     """
 
     def __init__(self, name):
-        pass
+        self.is_moderator = True
+        self.name = name
 
     def can_edit(self, comment):
         """ Checks user's edit privileges over the comment (True/False) """
-        pass
-
+        if self.comment.author_id == self.user_id:
+            self.edit_comment = True
+            return self.edit_comment
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
-        pass
-
+        if self.is_admin == 2:
+            return True
+        return False
 
 class admin(moderator):
     """ Holds methods for Administrator users
