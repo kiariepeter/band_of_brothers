@@ -18,40 +18,80 @@ comments = []
 class user:
     """ Holds methods for normal users
     """
+    def __init__(self, user_id, name, is_admin=3):
+        self._user_id = user_id
+        self._name = name
+        self._logged_in = False
+        self._logged_in_date = None
+        self._can_edit = None
+        self._can_delete = None
+        self._is_admin = is_admin
+        
 
-    def __init__(self, name):
-        pass
-
+    @property
     def name(self):
         """ Getter - Returns username """
-        pass
+        return self._name
 
+
+    @name.setter
     def name(self, value):
         """ Sets the username """
-        pass
+        self._name = value
+
+    @property
+    def user_id(self):
+        """ Getter - Returns user_id """
+        return self._user_id
+
+
+    @user_id.setter
+    def user_id(self, value):
+        """ Sets the user_id """
+        self._user_id = value
+
+    @property
+    def is_admin(self):
+        """ Getter - Returns is_admin """
+        return self._is_admin
+
+
+    @is_admin.setter
+    def is_admin(self, value):
+        """ Sets the is_admin """
+        self._is_admin = value
 
     def is_logged_in(self):
         """ Returns the login status - True/False """
-        pass
+        return self._logged_in
 
     def last_logged_in_at(self):
         """ Returns the timestamp for the last time a user logged in. """
-        pass
+        return self._logged_in_date
 
     def log_in(self):
         """ Logs in  a user."""
-        pass
+        self._logged_in = True
+        self._logged_in_date = datetime.datetime.now()
+        return self._logged_in
+
 
     def log_out(self):
-        pass
+        self._logged_in = False
+        return self._logged_in
 
     def can_edit(self, comment):
         """ Checks user's edit privileges over the comment (True/False) """
-        pass
+        if comment.author.user_id == self._user_id:
+            self._can_edit = True
+            return self._can_edit
 
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
-        pass
+        if comment.author.user_id == self._user_id:
+            self._can_delete = True
+            return self._can_delete
+
 
     def __repr__(self):
         """ String output to stdout """
