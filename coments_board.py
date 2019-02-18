@@ -10,14 +10,13 @@ moderators = []
 class user:
     """ Holds methods for normal users
     """
+
     def __init__(self, name):
         pass
-
 
     def name(self):
         """ Getter - Returns username """
         pass
-
 
     def name(self, value):
         """ Sets the username """
@@ -50,12 +49,14 @@ class user:
         """ String output to stdout """
         pass
 
+
 class moderator(user):
     """ Holds methods for moderator users
 
         Moderators can perform all operations of a normal user.
         Moderators can delete comments (remove trolls).
     """
+
     def __init__(self, name):
         pass
 
@@ -74,6 +75,7 @@ class admin(moderator):
         Admins can perform all operations of a normal user and moderator.
         Admins can edit and or delete any comment
     """
+
     def __init__(self, name):
         pass
 
@@ -86,53 +88,58 @@ class admin(moderator):
         pass
 
 
-class comment:
+class Comment:
     """ Holds methods for comments
 
         A comment is a message, a timestamp and the author.
         A comment can be a reply (which tracks the parent comment).
     """
-    def __init__(self, author, message, replied_to=None):
-        pass
 
+    def __init__(self, _author, _message, _replied_to=None):
+        self._author = _author
+        self._message = _message
+        self._replied_to = _replied_to
+
+    @author.getter
     def author(self):
         """ Returns author of comment """
-        pass
+        return self._author
 
-
+    @author.setter
     def author(self, value):
         """ Sets the comment's author's name """
-        pass
+        self._author = value
 
-
+    @message.getter
     def message(self):
         """ Returns the comment's message body """
-        pass
+        return self._message
 
-
+    @message.setter
     def message(self, value):
         """ Sets the comment's message body """
-        pass
+        self._message = value
 
     def created_at(self):
         """ Returns the comment's creation timestamp """
-        pass
+        return datetime.datetime.now()
 
-
+    @replied_to.getter
     def replied_to(self):
         """ Returns the Parent comment being replied to """
-        pass
+        return self._replied_to
 
-
+    @replied_to.setter
     def replied_to(self, value):
         """ Sets the Parent comment being replied to """
-        pass
+        self._replied_to = value
 
-    def to_string(self):
-        """ Returns a formated string """
-        pass
+    def __repr__(self):
+        if self.replied_to:
+            return "author : " + self.author + ", message " + self.message + ", replied to " + self.replied_to
+        else:
+            return "author : " + self.author + ", message " + self.message
 
 
 if __name__ == "__main__":
     pass
-
