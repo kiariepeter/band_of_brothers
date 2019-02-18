@@ -1,10 +1,18 @@
+#!/usr/bin/env python3
 """ A mock comments board section. """
 
 import datetime
+import getpass
 
-comments = []
-users = []
+
+users = [
+    {"user_id": 1, "name": "admin", "password": "adminpassword", "type": "admin"},
+    {"user_id": 2, "name": "chronixx", "password": "chronology", "type": "moderator"},
+    {"user_id": 3, "name": "kdot", "password": "topdawg", "type": "user"}
+]
 moderators = []
+admin = []
+comments = []
 
 
 class user:
@@ -89,23 +97,28 @@ class user:
         """ String output to stdout """
         pass
 
+
 class moderator(user):
     """ Holds methods for moderator users
 
         Moderators can perform all operations of a normal user.
         Moderators can delete comments (remove trolls).
     """
+
     def __init__(self, name):
-        pass
+        self.is_moderator = True
+        self.name = name
 
     def can_edit(self, comment):
         """ Checks user's edit privileges over the comment (True/False) """
-        pass
-
+        if self.comment.author_id == self.user_id:
+            self.edit_comment = True
+            return self.edit_comment
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
-        pass
-
+        if self.is_admin == 2:
+            return True
+        return False
 
 class admin(moderator):
     """ Holds methods for Administrator users
@@ -113,65 +126,129 @@ class admin(moderator):
         Admins can perform all operations of a normal user and moderator.
         Admins can edit and or delete any comment
     """
+
     def __init__(self, name):
-        pass
+        #here we initialize the isAdmin to true 
+        self.is_admin = 1
+        self.name = name
 
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
-        pass
+        #here we check if user is admin
+        if self.is_admin == 1:
+            return True
+        return False
 
-    def can_edit(self, comment):
-        """ Checks user's edit privileges over the comment (True/False) """
-        pass
+
+    def can_edit(self,comment):
+        """ Checks user's edit privileges over the comment (True/False)  """
+        if self.is_admin == 1:
+            return True
+        return False
 
 
-class comment:
+
+
+class Comment:
     """ Holds methods for comments
 
         A comment is a message, a timestamp and the author.
         A comment can be a reply (which tracks the parent comment).
     """
-    def __init__(self, author, message, replied_to=None):
-        pass
 
+    def __init__(self, _author, _message, _replied_to=None):
+        self._author = _author
+        self._message = _message
+        self._replied_to = _replied_to
+
+    @author.getter
     def author(self):
         """ Returns author of comment """
-        pass
+        return self._author
 
-
+    @author.setter
     def author(self, value):
         """ Sets the comment's author's name """
-        pass
+        self._author = value
 
-
+    @message.getter
     def message(self):
         """ Returns the comment's message body """
-        pass
+        return self._message
 
-
+    @message.setter
     def message(self, value):
         """ Sets the comment's message body """
-        pass
+        self._message = value
 
     def created_at(self):
         """ Returns the comment's creation timestamp """
-        pass
+        return datetime.datetime.now()
 
-
+    @replied_to.getter
     def replied_to(self):
         """ Returns the Parent comment being replied to """
-        pass
+        return self._replied_to
 
-
+    @replied_to.setter
     def replied_to(self, value):
         """ Sets the Parent comment being replied to """
-        pass
+        self._replied_to = value
 
-    def to_string(self):
-        """ Returns a formated string """
-        pass
+    def __repr__(self):
+        if self.replied_to:
+            return "author : " + self.author + ", message " + self.message + ", replied to " + self.replied_to
+        else:
+            return "author : " + self.author + ", message " + self.message
 
 
 if __name__ == "__main__":
-    pass
+    loop = True # Controls program temination
+    while loop == True:
+        print("*" * 80)
+        print(f"{'Welcome to the Band of brothers Comments boards':^80}")
+        print("*" * 80)
+        print(" \n Please Enter Login details ")
+
+        username = input("Enter user Name (blank space to exit):  ")
+        if username.strip() == "":
+            loop = False
+
+        password = getpass.getpass("Password: ")
+
+        if username in [_["name"] for _ in users] and \
+                password in [_["password"] for _ in users]:
+            print("What wold you like to do?")
+            print('\t 1 - Write a Comment')
+            print('\t 2 - Edit a comment')
+            print('\t 3 - Reply to a comment')
+            print('\t 0 - exit')
+            print('=' * 80)
+            menu_selection = input('Enter a selection [0-6]: ')
+
+
+            if menu_selection == 1:
+                pass
+
+            elif menu_selection == 2:
+                pass
+
+            elif menu_selection == 3:
+                pass
+
+            elif menu_selection == '0': # Exit
+                print(f"{' Good-Bye ':*^80}")
+                loop = False # Terminate program
+
+            else:
+                print(f"{'UNRECOGNIZED COMMAND':*^80}")
+                print(f'{menu_selection} is NOT a valid menu selection.')
+                print(f"{' Try Again ':-^80}")
+
+        else:
+            print("Invalid login details Please try again.")
+
+
+
+
 
