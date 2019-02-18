@@ -62,7 +62,7 @@ class moderator(user):
 
     def can_edit(self, comment):
         """ Checks user's edit privileges over the comment (True/False) """
-        if self.comment.author_id == self.user_id:
+        if comment.author_id == self.user_id:
             self.edit_comment = True
             return self.edit_comment
     def can_delete(self, comment):
