@@ -75,7 +75,7 @@ class admin(moderator):
         Admins can edit and or delete any comment
     """
     def __init__(self, name):
-        #here we initialize the isAdmin to true
+        #here we initialize the isAdmin to true 
         self.is_admin = 1
         self.name = name
 
