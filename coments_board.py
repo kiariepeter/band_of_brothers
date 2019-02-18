@@ -81,15 +81,15 @@ class admin(moderator):
 
     def can_delete(self, comment):
         """ Checks user's delete privileges over the comment (True/False) """
-        #here we check
-        if self.isAdmin == 1:
+        #here we check if user is admin
+        if self.is_admin == 1:
             return True
         return False
 
 
     def can_edit(self,comment):
-        """ Checks user's edit privileges over the comment (True/False) """
-        if self.isAdmin == 1:
+        """ Checks user's edit privileges over the comment (True/False)  """
+        if self.is_admin == 1:
             return True
         return False
 
