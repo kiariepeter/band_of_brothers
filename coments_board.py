@@ -162,7 +162,7 @@ if __name__ == "__main__":
             print('\t 1 - Write a Comment')
             print('\t 2 - Edit a comment')
             print('\t 3 - Reply to a comment')
-            print('\t 4 - exit')
+            print('\t 0 - exit')
             print('=' * 80)
             menu_selection = input('Enter a selection [0-6]: ')
 
@@ -176,21 +176,18 @@ if __name__ == "__main__":
             elif menu_selection == 3:
                 pass
 
-            elif menu_selection == 4:
-                pass
-
             elif menu_selection == '0': # Exit
                 print(f"{' Good-Bye ':*^80}")
                 loop = False # Terminate program
 
             else:
-                print(f"{'UNRECOGNIZED COMMAND':*^80'}")
+                print(f"{'UNRECOGNIZED COMMAND':*^80}")
                 print(f'{menu_selection} is NOT a valid menu selection.')
                 print(f"{' Try Again ':-^80}")
 
         else:
             print("Invalid login details Please try again.")
-            continue
+
 
 
 
